@@ -1,29 +1,46 @@
 import React from "react";
 
+import { cn } from "@/lib/utils";
+
 import { Title } from "./title";
 import { ProductCard } from "./product-card";
 
+interface ProductItem {
+  price: number;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  items: ProductItem[];
+}
+
 interface ProductsGroupListProps {
   title: string;
-  items: any[];
+  items: Product[];
   className?: string;
+  categoryId: number;
+  listClassName?: string;
 }
 
 export const ProductsGroupList = ({
   title,
   items,
   className,
+  categoryId,
+  listClassName,
 }: ProductsGroupListProps) => (
   <div className={className}>
     <Title text={title} size="lg" className="font-extrabold mb-5" />
-    <div className="grid grid-cols-3 gap-12">
-      {items.map((item, i) => (
+    <div className={cn("grid grid-cols-3 gap-12", listClassName)}>
+      {items.map((product, i) => (
         <ProductCard
-          key={item.id}
-          price={390}
+          key={product.id}
           count={i % 2}
-          name="Маргарита"
-          imageUrl="https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp"
+          name={product.name}
+          imageUrl={product.imageUrl}
+          price={product.items[0].price}
         />
       ))}
     </div>
