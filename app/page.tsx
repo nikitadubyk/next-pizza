@@ -4,6 +4,7 @@ import {
   Container,
   SortPopup,
   Categories,
+  ProductsGroupList,
 } from "@/components/shared";
 
 export default function Home() {
@@ -25,8 +26,9 @@ export default function Home() {
           <div className="w-[250px]">
             <Filters />
           </div>
-          <div className="flex-1">
-            <div className="flex flex-col gap-16">Cписок товаров</div>
+          <div className="flex flex-col gap-16">
+            <ProductsGroupList title="Пиццы" items={[1, 2, 3, 4, 5]} />
+            <ProductsGroupList title="Комбо" items={[1, 2, 3, 4, 5]} />
           </div>
         </div>
       </Container>
