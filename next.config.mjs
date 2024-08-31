@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["media.dodostatic.net"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media.dodostatic.net",
+        pathname: "**",
+      },
+    ],
   },
 };
 

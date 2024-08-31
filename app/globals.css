@@ -92,3 +92,62 @@ html {
 #nprogress .spinner-icon {
   @apply border-t-primary border-l-primary !important;
 }
+
+.select {
+  position: relative;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.select__control {
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.select__label {
+  background-color: #f0f0f0;
+  border-radius: 2px;
+  padding: 4px 8px;
+  margin: 2px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.select__label button {
+  background: none;
+  border: none;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.select__dropdown {
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 2px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.select__option {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.select__option.selected {
+  background-color: #e6f7ff;
+}
+
+.select__option.create {
+  color: blue;
+}
+
+.select__option:hover {
+  background-color: #f5f5f5;
+}
