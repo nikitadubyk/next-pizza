@@ -52,7 +52,7 @@ export default function Home() {
               categoryId={2}
               items={[
                 {
-                  id: 1,
+                  id: 12,
                   name: "Чикен бокс",
                   items: [{ price: 150 }],
                   imageUrl:
