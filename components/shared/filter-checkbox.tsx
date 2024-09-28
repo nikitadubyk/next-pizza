@@ -17,7 +17,7 @@ export const FilterCheckbox = ({
   endAdornment,
   onCheckedChange,
 }: FilterChecboxProps) => {
-  const id = `checkbox-${String(value)}`;
+  const id = `checkbox-${String(value)}-${text}`;
   return (
     <div className="flex items-center space-x-2">
       <Checkbox

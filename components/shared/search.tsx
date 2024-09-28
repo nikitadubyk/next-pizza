@@ -5,9 +5,9 @@ import { Search } from "lucide-react";
 import { useRef, useState } from "react";
 import { useClickAway, useDebounce } from "react-use";
 
-import { cn } from "@/lib/utils";
+import { API, Routes } from "@/services";
 import { Product } from "@prisma/client";
-import { API } from "@/services/api-clients";
+import { cn, generatePath } from "@/lib/utils";
 
 interface SearchInputProps {
   className?: string;
@@ -76,7 +76,7 @@ export const SearchInput = ({ className }: SearchInputProps) => {
               <Link
                 key={product.id}
                 onClick={onClickItem}
-                href={`/product/${product.id}`}
+                href={generatePath(Routes.Product.Details, { id: product.id })}
                 className="flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10"
               >
                 <img

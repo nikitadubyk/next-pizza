@@ -8,6 +8,7 @@ import { useDebounce } from "@/hooks";
 import { Input } from "../ui/input";
 
 import { FilterCheckbox, FilterChecboxProps } from "./filter-checkbox";
+import { Skeleton } from "../ui";
 
 type Item = FilterChecboxProps;
 
@@ -16,9 +17,12 @@ interface CheckboxFiltersGroupProps {
   items: Item[];
   limit?: number;
   className?: string;
+  isLoading?: boolean;
   defaultItems?: Item[];
   defaultValue?: string[];
+  selectedIds: Set<string>;
   searchInputPlaceholder?: string;
+  onClickCheckbox: (id: string) => void;
   onChange?: (values: string[]) => void;
 }
 
@@ -26,30 +30,28 @@ export const CheckboxFiltersGroup = ({
   title,
   items,
   onChange,
+  isLoading,
   limit = 5,
   className,
+  selectedIds,
   defaultItems,
   defaultValue,
+  onClickCheckbox,
   searchInputPlaceholder = "Поиск...",
 }: CheckboxFiltersGroupProps) => {
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
   const debounceValue = useDebounce(search, 500);
-  const [selected, { add, toggle }] = useSet<string>(new Set([]));
-
-  const onCheckedChange = (value: string) => {
-    toggle(value);
-  };
 
   useEffect(() => {
     if (defaultValue) {
-      defaultValue.forEach(add);
+      defaultValue.forEach(onClickCheckbox);
     }
   }, [defaultValue?.length]);
 
   useEffect(() => {
-    onChange?.(Array.from(selected));
-  }, [selected]);
+    onChange?.(Array.from(selectedIds));
+  }, [selectedIds]);
 
   const list = showAll
     ? items.filter((value) =>
@@ -60,6 +62,19 @@ export const CheckboxFiltersGroup = ({
   const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+
+  if (isLoading) {
+    return (
+      <div className={className}>
+        <p className="font-bold mb-3">{title}</p>
+
+        {new Array(limit).fill(null).map((_, index) => (
+          <Skeleton key={index} className="h-6 w-full mb-4 rounded-full" />
+        ))}
+        <Skeleton className="h-6 w-28 mb-4 rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <div className={className}>
@@ -83,8 +98,8 @@ export const CheckboxFiltersGroup = ({
             value={item.value}
             key={String(item.value)}
             endAdornment={item.endAdornment}
-            checked={selected.has(item.value)}
-            onCheckedChange={() => onCheckedChange(item.value)}
+            checked={selectedIds.has(item.value)}
+            onCheckedChange={() => onClickCheckbox(item.value)}
           />
         ))}
         {list.length === 0 && search && <p>Ничего не найдено...</p>}
