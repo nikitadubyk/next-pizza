@@ -10,7 +10,7 @@ interface CategoriesProps {
   className?: string;
 }
 
-const cats = [
+const categories = [
   { id: 1, name: "Пицца" },
   { id: 2, name: "Комбо" },
   { id: 3, name: "Закуски" },
@@ -27,7 +27,7 @@ export const Categories = ({ className }: CategoriesProps) => {
     <div
       className={cn("inline-flex gap-1 bg-gray-50 p-1 rounded-2xl", className)}
     >
-      {cats.map(({ id, name }) => (
+      {categories.map(({ id, name }) => (
         <Link
           key={id}
           href={`#${name}`}

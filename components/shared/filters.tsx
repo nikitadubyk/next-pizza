@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
-
 import { Input } from "@/components/ui/input";
-import { useFilters, useFilterIngredients } from "@/hooks";
-import { FilterCheckbox } from "@/components/shared/filter-checkbox";
+import { useFilters, useQueryFilters, useFilterIngredients } from "@/hooks";
 import { CheckboxFiltersGroup } from "@/components/shared/checkbox-filters-group";
 
 import { RangeSlider } from "../ui";
@@ -15,11 +12,6 @@ interface FiltersProps {
   className?: string;
 }
 
-interface PriceRange {
-  priceTo: number;
-  priceFrom: number;
-}
-
 const commonPriceProps = {
   min: 0,
   max: 1000,
@@ -27,21 +19,27 @@ const commonPriceProps = {
 };
 
 export const Filters = ({ className }: FiltersProps) => {
+  const { isLoading, ingredients } = useFilterIngredients();
+
   const filters = useFilters();
-  const { isLoading, ingredients, ...checkboxProps } = useFilterIngredients();
-  const [priceRange, setPriceRange] = useState<PriceRange>({
-    priceFrom: 0,
-    priceTo: 1000,
-  });
+
+  useQueryFilters(filters);
+
+  const {
+    sizes,
+    prices,
+    setSizes,
+    setPrices,
+    pizzaTypes,
+    setPizzaTypes,
+    selectedIngredients,
+    setSelectedIngredients,
+  } = filters;
 
   const ingredientItems = ingredients?.map((ingredient) => ({
     text: ingredient.name,
     value: ingredient.id.toString(),
   }));
-
-  const onSetPrice = (name: keyof PriceRange, value: number) => {
-    setPriceRange((prev) => ({ ...prev, [name]: value }));
-  };
 
   return (
     <div className={className}>
@@ -50,8 +48,8 @@ export const Filters = ({ className }: FiltersProps) => {
       <CheckboxFiltersGroup
         className="mb-5"
         title="Тип теста"
-        selectedIds={filters.pizzaTypes}
-        onClickCheckbox={filters.setPizzaTypes}
+        selectedIds={pizzaTypes}
+        onClickCheckbox={setPizzaTypes}
         items={[
           { text: "Тонкое", value: "1" },
           { text: "Традиционное", value: "2" },
@@ -61,13 +59,12 @@ export const Filters = ({ className }: FiltersProps) => {
       <CheckboxFiltersGroup
         title="Размеры"
         className="mb-5"
-        selectedIds={filters.sizes}
-        onClickCheckbox={filters.setSizes}
-        items={[
-          { text: "20 см", value: "20" },
-          { text: "30 см", value: "30" },
-          { text: "40 см", value: "40" },
-        ]}
+        selectedIds={sizes}
+        onClickCheckbox={setSizes}
+        items={[20, 30, 40].map((value) => ({
+          text: `${value} см`,
+          value: String(value),
+        }))}
       />
 
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
@@ -76,36 +73,37 @@ export const Filters = ({ className }: FiltersProps) => {
           <Input
             {...commonPriceProps}
             placeholder="0"
-            defaultValue={0}
-            value={priceRange.priceFrom.toString()}
-            onChange={(e) => onSetPrice("priceFrom", Number(e.target.value))}
+            value={prices?.priceFrom?.toString() || ""}
+            onChange={(e) => setPrices("priceFrom", Number(e.target.value))}
           />
           <Input
             {...commonPriceProps}
             min={100}
             placeholder="30000"
-            value={priceRange.priceTo.toString()}
-            onChange={(e) => onSetPrice("priceTo", Number(e.target.value))}
+            value={prices?.priceTo?.toString() || ""}
+            onChange={(e) => setPrices("priceTo", Number(e.target.value))}
           />
         </div>
         <RangeSlider
           min={0}
           step={10}
           max={1000}
-          value={[priceRange.priceFrom, priceRange.priceTo]}
+          value={[prices.priceFrom ?? 0, prices.priceTo ?? 1000]}
           onValueChange={([priceFrom, priceTo]) => {
-            setPriceRange({ priceTo, priceFrom });
+            setPrices("priceTo", priceTo);
+            setPrices("priceFrom", priceFrom);
           }}
         />
       </div>
 
       <CheckboxFiltersGroup
-        {...checkboxProps}
         limit={6}
-        title="Формат"
         className="mt-5"
+        title="Ингредиенты"
         isLoading={isLoading}
         items={ingredientItems}
+        selectedIds={selectedIngredients}
+        onClickCheckbox={setSelectedIngredients}
         defaultItems={ingredientItems?.slice(0, 6)}
       />
     </div>

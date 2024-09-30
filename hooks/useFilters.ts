@@ -2,12 +2,12 @@ import { useSet } from "react-use";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-interface PriceProps {
+interface PriceRange {
   priceTo?: number;
   priceFrom?: number;
 }
 
-interface QueryFilters extends PriceProps {
+interface QueryFilters extends PriceRange {
   sizes: string;
   pizzaTypes: string;
   ingredients: string;
@@ -15,7 +15,7 @@ interface QueryFilters extends PriceProps {
 
 export interface Filters {
   sizes: Set<string>;
-  prices: PriceProps;
+  prices: PriceRange;
   pizzaTypes: Set<string>;
   selectedIngredients: Set<string>;
 }
@@ -24,7 +24,7 @@ interface ReturnProps extends Filters {
   setSizes: (value: string) => void;
   setPizzaTypes: (value: string) => void;
   setSelectedIngredients: (value: string) => void;
-  setPrices: (name: keyof PriceProps, value: number) => void;
+  setPrices: (name: keyof PriceRange, value: number) => void;
 }
 
 export const useFilters = (): ReturnProps => {
@@ -33,30 +33,27 @@ export const useFilters = (): ReturnProps => {
     string
   >;
 
+  const getSearchParams = (name: keyof QueryFilters) =>
+    searchParams.get(name)?.split(",") || "";
+
   const [selectedIngredients, { toggle: toggleIngredients }] = useSet(
-    new Set<string>(searchParams.get("ingredients")?.split(","))
+    new Set(getSearchParams("ingredients"))
   );
 
   const [sizes, { toggle: toggleSizes }] = useSet(
-    new Set<string>(
-      searchParams.has("sizes") ? searchParams.get("sizes")?.split(",") : []
-    )
+    new Set(searchParams.has("sizes") ? getSearchParams("sizes") : [])
   );
 
   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-    new Set<string>(
-      searchParams.has("pizzaTypes")
-        ? searchParams.get("pizzaTypes")?.split(",")
-        : []
-    )
+    new Set(searchParams.has("pizzaTypes") ? getSearchParams("pizzaTypes") : [])
   );
 
-  const [prices, setPrices] = useState<PriceProps>({
-    priceFrom: Number(searchParams.get("priceFrom")) || undefined,
+  const [prices, setPrices] = useState<PriceRange>({
     priceTo: Number(searchParams.get("priceTo")) || undefined,
+    priceFrom: Number(searchParams.get("priceFrom")) || undefined,
   });
 
-  const updatePrice = (name: keyof PriceProps, value: number) => {
+  const updatePrice = (name: keyof PriceRange, value: number) => {
     setPrices((prev) => ({
       ...prev,
       [name]: value,

@@ -57,7 +57,7 @@ export const CheckboxFiltersGroup = ({
     ? items.filter((value) =>
         value.text.toLowerCase().includes(debounceValue.toLowerCase())
       )
-    : defaultItems || items;
+    : (defaultItems || items).slice(0, limit);
 
   const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
