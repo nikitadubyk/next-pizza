@@ -1,3 +1,4 @@
+import { API } from "@/services";
 import {
   Title,
   Filters,
@@ -7,7 +8,9 @@ import {
   ProductsGroupList,
 } from "@/components/shared";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await API.categories.getAll();
+
   return (
     <>
       <Container className="mt-10">
@@ -16,7 +19,7 @@ export default function Home() {
 
       <div className="sticky top-0 bg-white py-5 shadow-lg shadow-black/5 z-10">
         <Container className="flex justify-between">
-          <Categories />
+          <Categories categories={categories} />
           <SortPopup />
         </Container>
       </div>
@@ -27,39 +30,14 @@ export default function Home() {
             <Filters />
           </div>
           <div className="flex flex-col gap-16">
-            <ProductsGroupList
-              title="Пиццы"
-              categoryId={1}
-              items={[
-                {
-                  id: 1,
-                  name: "Сырная",
-                  items: [{ price: 150 }],
-                  imageUrl:
-                    "https://media.dodostatic.net/image/r:292x292/11EE7D610D2925109AB2E1C92CC5383C.avif",
-                },
-                {
-                  id: 2,
-                  name: "Мясная с аджикой",
-                  items: [{ price: 150 }],
-                  imageUrl:
-                    "https://media.dodostatic.net/image/r:292x292/11EF438E93884BFEBFE79D11095AE2D4.avif",
-                },
-              ]}
-            />
-            <ProductsGroupList
-              title="Комбо"
-              categoryId={2}
-              items={[
-                {
-                  id: 12,
-                  name: "Чикен бокс",
-                  items: [{ price: 150 }],
-                  imageUrl:
-                    "https://media.dodostatic.net/image/r:292x292/11EEB05826E64288A83EFCF67DA86AAE.avif",
-                },
-              ]}
-            />
+            {categories?.map((category) => (
+              <ProductsGroupList
+                key={category.id}
+                title={category.name}
+                categoryId={category.id}
+                items={category.products}
+              />
+            ))}
           </div>
         </div>
       </Container>

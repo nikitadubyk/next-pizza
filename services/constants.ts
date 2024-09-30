@@ -1,4 +1,5 @@
 export enum ApiRoutes {
+  Categories = "/categories",
   Ingredients = "/ingredients",
   ProductsSearch = "/products/search",
 }
