@@ -1,5 +1,6 @@
 "use client";
 
+import { PizzaSize } from "@/types";
 import { Input } from "@/components/ui/input";
 import { useFilters, useQueryFilters, useFilterIngredients } from "@/hooks";
 import { CheckboxFiltersGroup } from "@/components/shared/checkbox-filters-group";
@@ -61,7 +62,7 @@ export const Filters = ({ className }: FiltersProps) => {
         className="mb-5"
         selectedIds={sizes}
         onClickCheckbox={setSizes}
-        items={[20, 30, 40].map((value) => ({
+        items={Object.values(PizzaSize).map((value) => ({
           text: `${value} см`,
           value: String(value),
         }))}

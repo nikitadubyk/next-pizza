@@ -14,3 +14,11 @@ export const search = async (query: string) => {
   );
   return data;
 };
+
+export const getById = async (id: string) => {
+  const { data } = await axiosInstance.get<Product>(
+    ApiRoutes.Product.replace("[id]", id)
+  );
+
+  return data;
+};

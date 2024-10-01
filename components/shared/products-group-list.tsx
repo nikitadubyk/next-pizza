@@ -1,9 +1,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useIntersection } from "react-use";
 
-import { cn } from "@/lib/utils";
+import { cn, generatePath } from "@/lib/utils";
+import { Routes } from "@/services";
 
 import { Title } from "./title";
 import { ProductCard } from "./product-card";
@@ -35,6 +37,7 @@ export const ProductsGroupList = ({
   categoryId,
   listClassName,
 }: ProductsGroupListProps) => {
+  const route = useRouter();
   const intersectionRef = useRef<HTMLDivElement>(null);
   const setActiveCategoryId = useCategoriesStore(
     (store) => store.setActiveCategoryId
@@ -61,6 +64,11 @@ export const ProductsGroupList = ({
             name={product.name}
             imageUrl={product.imageUrl}
             price={product.items[0].price}
+            onClick={() =>
+              route.push(
+                generatePath(Routes.Product.Details, { id: product.id })
+              )
+            }
           />
         ))}
       </div>

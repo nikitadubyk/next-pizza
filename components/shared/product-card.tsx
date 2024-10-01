@@ -14,16 +14,18 @@ interface ProductCardProps {
   count?: number;
   imageUrl: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export const ProductCard = ({
   name,
   price,
   count,
+  onClick,
   imageUrl,
   className,
 }: ProductCardProps) => (
-  <div className={cn(className)}>
+  <div onClick={onClick} className={cn(className)}>
     <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
       <Image alt="Logo" width={215} height={215} src={imageUrl} />
     </div>
