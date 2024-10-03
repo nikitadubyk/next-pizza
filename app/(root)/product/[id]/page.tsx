@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { API } from "@/services";
-import { PizzaSize } from "@/types";
+import { PizzaSize } from "@/@types";
 import {
   Title,
   Container,

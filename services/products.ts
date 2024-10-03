@@ -1,5 +1,7 @@
 import { Product } from "@prisma/client";
 
+import { ProductWithRelations } from "@/@types";
+
 import { ApiRoutes } from "./constants";
 import { axiosInstance } from "./instance";
 
@@ -16,7 +18,7 @@ export const search = async (query: string) => {
 };
 
 export const getById = async (id: string) => {
-  const { data } = await axiosInstance.get<Product>(
+  const { data } = await axiosInstance.get<ProductWithRelations>(
     ApiRoutes.Product.replace("[id]", id)
   );
 

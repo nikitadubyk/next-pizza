@@ -7,6 +7,7 @@ export { SortPopup } from "./sort-popup";
 export { Categories } from "./categories";
 export { CountButton } from "./count-button";
 export { ProductCard } from "./product-card";
+export { ChooseProductModal } from "./modals";
 export { ProductImage } from "./product-image";
 export { GroupVariants } from "./group-variants";
 export { FilterCheckbox } from "./filter-checkbox";

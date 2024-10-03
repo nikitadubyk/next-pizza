@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { PizzaSize } from "@/types";
+import { PizzaSize } from "@/@types";
 
 interface ProductImageProps {
   imageUrl: string;

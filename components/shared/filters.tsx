@@ -1,6 +1,6 @@
 "use client";
 
-import { PizzaSize } from "@/types";
+import { PizzaSize } from "@/@types";
 import { Input } from "@/components/ui/input";
 import { useFilters, useQueryFilters, useFilterIngredients } from "@/hooks";
 import { CheckboxFiltersGroup } from "@/components/shared/checkbox-filters-group";
