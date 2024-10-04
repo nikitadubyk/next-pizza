@@ -5,7 +5,7 @@ import { PizzaSize } from "@/@types";
 import {
   Title,
   Container,
-  ProductImage,
+  PizzaImage,
   GroupVariants,
 } from "@/components/shared";
 
@@ -27,7 +27,7 @@ export default async function ProductDetailsPage({
   return (
     <Container className="flex flex-col my-10">
       <div className="flex flex-1">
-        <ProductImage imageUrl={product.imageUrl} size={PizzaSize.Medium} />
+        <PizzaImage imageUrl={product.imageUrl} size={PizzaSize.Medium} />
 
         <div className="w-[490px] bg-[#FCFCFC] p-7">
           <Title

@@ -1,6 +1,6 @@
+export * from "./dialog";
 export { Input } from "./input";
 export { Button } from "./button";
-export { Dialog } from "./dialog";
 export { Drawer } from "./drawer";
 export { Select } from "./select";
 export { Slider } from "./slider";

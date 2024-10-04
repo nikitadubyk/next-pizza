@@ -1,17 +1,13 @@
 import { cn } from "@/lib/utils";
 import { PizzaSize } from "@/@types";
 
-interface ProductImageProps {
+interface PizzaImageProps {
   imageUrl: string;
   className?: string;
   size: (typeof PizzaSize)[keyof typeof PizzaSize];
 }
 
-export const ProductImage = ({
-  size,
-  imageUrl,
-  className,
-}: ProductImageProps) => (
+export const PizzaImage = ({ size, imageUrl, className }: PizzaImageProps) => (
   <div
     className={cn(
       "flex items-center justify-center flex-1 relative w-full",

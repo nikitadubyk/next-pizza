@@ -1,14 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { API } from "@/services";
-import { PizzaSize } from "@/@types";
-import {
-  Title,
-  Container,
-  ProductImage,
-  GroupVariants,
-  ChooseProductModal,
-} from "@/components/shared";
+import { ChooseProductModal } from "@/components/shared";
 
 interface ProductModalPageProps {
   params: { id: string };
@@ -24,6 +17,8 @@ export default async function ProductModalPage({
   if (!product) {
     return notFound();
   }
+
+  console.log("product", product);
 
   return <ChooseProductModal product={product} />;
 }

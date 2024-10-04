@@ -4,9 +4,8 @@ import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { ProductWithRelations } from "@/@types";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-
-// import { ProductForm } from "../product-form";
+import { Dialog, DialogContent } from "@/components/ui";
+import { ChoosePizzaForm, ChooseProductForm } from "@/components/shared";
 
 interface ChooseProductModalProps {
   className?: string;
@@ -18,6 +17,7 @@ export const ChooseProductModal = ({
   className,
 }: ChooseProductModalProps) => {
   const router = useRouter();
+  const isPizzaForm = product.items.some((value) => !!value.pizzaType);
 
   return (
     <Dialog open={!!product} onOpenChange={router.back}>
@@ -27,7 +27,11 @@ export const ChooseProductModal = ({
           className
         )}
       >
-        <p>{product.name}</p>
+        {isPizzaForm ? (
+          <ChoosePizzaForm {...product} onSubmit={() => {}} />
+        ) : (
+          <ChooseProductForm {...product} onSubmit={() => {}} />
+        )}
       </DialogContent>
     </Dialog>
   );
