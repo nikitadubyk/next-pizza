@@ -1,4 +1,6 @@
-import { API } from "@/services";
+import { Suspense } from "react";
+
+import { prisma } from "@/prisma/prisma-client";
 import {
   Title,
   Filters,
@@ -9,10 +11,19 @@ import {
 } from "@/components/shared";
 
 export default async function Home() {
-  const categories = await API.categories.getAll();
+  const categories = await prisma.category.findMany({
+    include: {
+      products: {
+        include: {
+          items: true,
+          ingredients: true,
+        },
+      },
+    },
+  });
 
   return (
-    <>
+    <Suspense>
       <Container className="mt-10">
         <Title text="Все пиццы" size="lg" className="font-extrabold" />
       </Container>
@@ -41,6 +52,6 @@ export default async function Home() {
           </div>
         </div>
       </Container>
-    </>
+    </Suspense>
   );
 }
