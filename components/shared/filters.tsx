@@ -62,10 +62,12 @@ export const Filters = ({ className }: FiltersProps) => {
         className="mb-5"
         selectedIds={sizes}
         onClickCheckbox={setSizes}
-        items={Object.values(PizzaSize).map((value) => ({
-          text: `${value} см`,
-          value: String(value),
-        }))}
+        items={Object.values(PizzaSize)
+          .filter((value) => typeof value !== "string")
+          .map((value) => ({
+            text: `${value} см`,
+            value: String(value),
+          }))}
       />
 
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
