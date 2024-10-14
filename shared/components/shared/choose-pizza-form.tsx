@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { ProductItem } from "@prisma/client";
 
-import { PizzaSize } from "@/types";
 import { cn } from "@/shared/lib/utils";
 import { Title, PizzaImage } from "@/shared/components/shared";
 
@@ -30,7 +29,7 @@ export const ChoosePizzaForm = ({
 
   return (
     <div className={cn(className, "flex flex-1")}>
-      <PizzaImage imageUrl={imageUrl} size={PizzaSize.Small} />
+      <PizzaImage imageUrl={imageUrl} size={30} />
 
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <Title text={name} size="md" className="font-extrabold mb-1" />

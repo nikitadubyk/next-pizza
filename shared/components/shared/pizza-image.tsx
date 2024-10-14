@@ -1,10 +1,9 @@
 import { cn } from "@/shared/lib/utils";
-import { PizzaSize } from "@/types";
 
 interface PizzaImageProps {
+  size: number;
   imageUrl: string;
   className?: string;
-  size: (typeof PizzaSize)[keyof typeof PizzaSize];
 }
 
 export const PizzaImage = ({ size, imageUrl, className }: PizzaImageProps) => (
@@ -18,9 +17,9 @@ export const PizzaImage = ({ size, imageUrl, className }: PizzaImageProps) => (
       alt="Logo"
       src={imageUrl}
       className={cn("relative left-2 top-2 transition-all z-10 duration-300", {
-        "w-[300px] h-[300px]": size === PizzaSize.Small,
-        "w-[400px] h-[400px]": size === PizzaSize.Medium,
-        "w-[500px] h-[500px]": size === PizzaSize.Large,
+        "w-[300px] h-[300px]": size === 20,
+        "w-[400px] h-[400px]": size === 30,
+        "w-[500px] h-[500px]": size === 40,
       })}
     />
 

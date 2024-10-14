@@ -1,7 +1,7 @@
 "use client";
 
-import { PizzaSize } from "@/types";
 import { Input } from "@/shared/components/ui/input";
+import { pizzaSizes, pizzaTypes } from "@/shared/constants";
 import { CheckboxFiltersGroup } from "@/shared/components/shared/checkbox-filters-group";
 import {
   useFilters,
@@ -35,8 +35,8 @@ export const Filters = ({ className }: FiltersProps) => {
     prices,
     setSizes,
     setPrices,
-    pizzaTypes,
     setPizzaTypes,
+    pizzaTypes: types,
     selectedIngredients,
     setSelectedIngredients,
   } = filters;
@@ -53,25 +53,17 @@ export const Filters = ({ className }: FiltersProps) => {
       <CheckboxFiltersGroup
         className="mb-5"
         title="Тип теста"
-        selectedIds={pizzaTypes}
+        items={pizzaTypes}
+        selectedIds={types}
         onClickCheckbox={setPizzaTypes}
-        items={[
-          { text: "Тонкое", value: "1" },
-          { text: "Традиционное", value: "2" },
-        ]}
       />
 
       <CheckboxFiltersGroup
         title="Размеры"
         className="mb-5"
+        items={pizzaSizes}
         selectedIds={sizes}
         onClickCheckbox={setSizes}
-        items={Object.values(PizzaSize)
-          .filter((value) => typeof value !== "string")
-          .map((value) => ({
-            text: `${value} см`,
-            value: String(value),
-          }))}
       />
 
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">

@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 
 import { API } from "@/shared/services";
-import { PizzaSize } from "@/types";
 import {
   Title,
   Container,
@@ -27,7 +26,7 @@ export default async function ProductDetailsPage({
   return (
     <Container className="flex flex-col my-10">
       <div className="flex flex-1">
-        <PizzaImage imageUrl={product.imageUrl} size={PizzaSize.Medium} />
+        <PizzaImage imageUrl={product.imageUrl} size={30} />
 
         <div className="w-[490px] bg-[#FCFCFC] p-7">
           <Title
