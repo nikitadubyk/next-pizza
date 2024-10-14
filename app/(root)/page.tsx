@@ -8,7 +8,7 @@ import {
   SortPopup,
   Categories,
   ProductsGroupList,
-} from "@/components/shared";
+} from "@/shared/components/shared";
 
 export default async function Home() {
   const categories = await prisma.category.findMany({

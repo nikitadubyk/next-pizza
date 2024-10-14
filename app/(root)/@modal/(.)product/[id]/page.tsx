@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { API } from "@/services";
-import { ChooseProductModal } from "@/components/shared";
+import { API } from "@/shared/services";
+import { ChooseProductModal } from "@/shared/components/shared";
 
 interface ProductModalPageProps {
   params: { id: string };

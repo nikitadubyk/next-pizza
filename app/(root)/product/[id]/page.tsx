@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 
-import { API } from "@/services";
-import { PizzaSize } from "@/@types";
+import { API } from "@/shared/services";
+import { PizzaSize } from "@/types";
 import {
   Title,
   Container,
   PizzaImage,
   GroupVariants,
-} from "@/components/shared";
+} from "@/shared/components/shared";
 
 interface ProductDetailsPageProps {
   params: { id: string };
