@@ -118,11 +118,13 @@ async function up() {
     data: [
       // Пицца "Пепперони фреш"
       ...getDefaultProductItem(pizza1.id, 1),
+      ...getDefaultProductItem(pizza1.id, 2),
 
       // Пицца "Сырная"
       ...getDefaultProductItem(pizza2.id, 1),
 
       // Пицца "Чоризо фреш"
+      ...getDefaultProductItem(pizza3.id, 1),
       ...getDefaultProductItem(pizza3.id, 2),
 
       ...otherProductItems,

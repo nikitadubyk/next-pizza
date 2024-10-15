@@ -3,7 +3,7 @@
 import { cn } from "@/shared/lib/utils";
 
 export type Variant = {
-  name: string;
+  text: string;
   value: string;
   disabled?: boolean;
 };
@@ -29,7 +29,7 @@ export const GroupVariants = ({
   >
     {items.map((item) => (
       <button
-        key={item.name}
+        key={item.text}
         onClick={() => onClick?.(item.value)}
         className={cn(
           "flex items-center justify-center h-[30px] px-5 flex-1 rounded-3xl transition-all duration-400 text-sm",
@@ -39,7 +39,7 @@ export const GroupVariants = ({
           }
         )}
       >
-        {item.name}
+        {item.text}
       </button>
     ))}
   </div>

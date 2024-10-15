@@ -11,6 +11,7 @@ export { CountButton } from "./count-button";
 export { ProductCard } from "./product-card";
 export { GroupVariants } from "./group-variants";
 export { FilterCheckbox } from "./filter-checkbox";
+export { IngredientItem } from "./ingredient-item";
 export { ChoosePizzaForm } from "./choose-pizza-form";
 export { ChooseProductForm } from "./choose-product-form";
 export { ProductsGroupList } from "./products-group-list";
