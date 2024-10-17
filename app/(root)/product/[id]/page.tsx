@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { API } from "@/shared/services";
+import { pizzaSizes } from "@/shared/constants";
 import {
   Title,
   Container,
@@ -43,23 +44,7 @@ export default async function ProductDetailsPage({
           </p>
 
           <div className="flex flex-col gap-4 mt-5">
-            <GroupVariants
-              value="1"
-              items={[
-                {
-                  value: "1",
-                  name: "Маленькая",
-                },
-                {
-                  value: "2",
-                  name: "Средняя",
-                },
-                {
-                  value: "3",
-                  name: "Большая",
-                },
-              ]}
-            />
+            <GroupVariants value="1" items={pizzaSizes} />
           </div>
         </div>
       </div>
