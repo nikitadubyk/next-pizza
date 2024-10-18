@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ingredient, ProductItem } from "@prisma/client";
 
 import { cn } from "@/shared/lib/utils";
@@ -13,6 +13,7 @@ import {
 import {
   PizzaSize,
   PizzaType,
+  mapPizzaType,
   pizzaSizes,
   pizzaTypes,
 } from "@/shared/constants";
@@ -29,6 +30,9 @@ interface ChoosePizzaFormProps {
   ingredients: Ingredient[];
   onSubmit: (itemId: number, ingredients: number[]) => void;
 }
+
+const lowerTitle = (name: string) =>
+  name[0].toLowerCase() + name.slice(1).toLowerCase();
 
 export const ChoosePizzaForm = ({
   name,
@@ -55,6 +59,18 @@ export const ChoosePizzaForm = ({
 
   const totalPrice = pizzaPrice + totalIngredientsPrice;
 
+  const onClickAdd = () => {
+    onSubmit(1, Array.from(selectedIngredients));
+  };
+
+  const textDetails = `${size} см, ${lowerTitle(mapPizzaType[type])} тесто`;
+
+  const availablePizzas = items.filter((item) => item.pizzaType === type);
+  const availablePizzaSizes = pizzaSizes.map((item) => ({
+    ...item,
+    disabled: !availablePizzas.some((pizza) => pizza.size === +item.value),
+  }));
+
   return (
     <div className={cn(className, "flex flex-1 h-[550px]")}>
       <PizzaImage size={size} imageUrl={imageUrl} />
@@ -63,18 +79,13 @@ export const ChoosePizzaForm = ({
         <Title text={name} size="md" className="font-extrabold mb-1" />
 
         <div className="overflow-auto scrollbar">
-          <p className="text-gray-400">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Accusantium, eius? Quos quibusdam harum, temporibus enim ea vitae
-            dignissimos, quasi fugiat quas excepturi iste ullam illo tenetur
-            quam repudiandae animi voluptate.
-          </p>
+          <p className="text-gray-400">{textDetails}</p>
 
           <div className="mt-6">
             <GroupVariants
               className="mb-2"
-              items={pizzaSizes}
               value={size?.toString()}
+              items={availablePizzaSizes}
               onClick={(value) => setSize(+value as PizzaSize)}
             />
 
