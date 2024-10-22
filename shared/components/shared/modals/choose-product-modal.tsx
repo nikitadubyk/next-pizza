@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { ProductWithRelations } from "@/types";
 import { Dialog, DialogContent } from "@/shared/components/ui";
 import { ChoosePizzaForm, ChooseProductForm } from "@/shared/components/shared";

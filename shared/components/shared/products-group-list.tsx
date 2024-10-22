@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useIntersection } from "react-use";
 
-import { cn, generatePath } from "@/shared/lib/utils";
+import { cn, generatePath } from "@/shared/lib";
 import { Routes } from "@/shared/services";
 
 import { Title } from "./title";

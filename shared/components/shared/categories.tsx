@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { Category } from "@prisma/client";
 import { useCategoriesStore } from "@/shared/store";
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { User, ArrowRight, ShoppingCart } from "lucide-react";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 
 import { Button } from "../ui";
 

@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 
 interface ContainerProps extends React.PropsWithChildren {
   className?: string;

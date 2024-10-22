@@ -1,6 +1,6 @@
 import { ProductItem } from "@prisma/client";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { Title } from "@/shared/components/shared";
 
 import { Button } from "../ui";

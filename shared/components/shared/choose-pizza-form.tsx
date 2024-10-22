@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Ingredient, ProductItem } from "@prisma/client";
 
-import { cn } from "@/shared/lib/utils";
+import { cn, calcTotalPizzaPrice, getAvailablePizzaSizes } from "@/shared/lib";
 import {
   Title,
   PizzaImage,
@@ -13,9 +13,8 @@ import {
 import {
   PizzaSize,
   PizzaType,
-  mapPizzaType,
-  pizzaSizes,
   pizzaTypes,
+  mapPizzaType,
 } from "@/shared/constants";
 
 import { Button } from "../ui";
@@ -37,7 +36,6 @@ const lowerTitle = (name: string) =>
 export const ChoosePizzaForm = ({
   name,
   items,
-  loading,
   imageUrl,
   onSubmit,
   className,
@@ -49,27 +47,32 @@ export const ChoosePizzaForm = ({
     new Set<number>([])
   );
 
-  const pizzaPrice =
-    items.find((item) => item.pizzaType === type && item.size === size)
-      ?.price ?? 0;
+  const totalPrice = calcTotalPizzaPrice({
+    size,
+    type,
+    items,
+    ingredients,
+    selectedIngredients,
+  });
 
-  const totalIngredientsPrice = ingredients
-    .filter((ingredient) => selectedIngredients.has(ingredient.id))
-    .reduce((acc, item) => acc + item.price, 0);
+  const textDetails = `${size} см, ${lowerTitle(mapPizzaType[type])} тесто`;
 
-  const totalPrice = pizzaPrice + totalIngredientsPrice;
+  const availablePizzaSizes = getAvailablePizzaSizes({ type, items });
+
+  useEffect(() => {
+    const isAvailableSize = availablePizzaSizes?.find(
+      (item) => +item.value === size && !item.disabled
+    );
+    const availableSize = availablePizzaSizes?.find((value) => !value.disabled);
+
+    if (!isAvailableSize && availableSize) {
+      setSize(Number(availableSize.value) as PizzaSize);
+    }
+  }, [type]);
 
   const onClickAdd = () => {
     onSubmit(1, Array.from(selectedIngredients));
   };
-
-  const textDetails = `${size} см, ${lowerTitle(mapPizzaType[type])} тесто`;
-
-  const availablePizzas = items.filter((item) => item.pizzaType === type);
-  const availablePizzaSizes = pizzaSizes.map((item) => ({
-    ...item,
-    disabled: !availablePizzas.some((pizza) => pizza.size === +item.value),
-  }));
 
   return (
     <div className={cn(className, "flex flex-1 h-[550px]")}>
@@ -112,7 +115,10 @@ export const ChoosePizzaForm = ({
           </div>
         </div>
 
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
+        <Button
+          onClick={onClickAdd}
+          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+        >
           Добавить в корзину за {totalPrice} ₽
         </Button>
       </div>

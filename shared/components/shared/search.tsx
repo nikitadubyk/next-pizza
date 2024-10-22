@@ -7,7 +7,7 @@ import { useClickAway, useDebounce } from "react-use";
 
 import { API, Routes } from "@/shared/services";
 import { Product } from "@prisma/client";
-import { cn, generatePath } from "@/shared/lib/utils";
+import { cn, generatePath } from "@/shared/lib";
 
 interface SearchInputProps {
   className?: string;
