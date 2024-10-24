@@ -1,3 +1,4 @@
+export * from "./sheet";
 export * from "./dialog";
 export { Input } from "./input";
 export { Button } from "./button";

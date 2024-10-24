@@ -6,6 +6,7 @@ export enum ApiRoutes {
 }
 
 export const Routes = {
+  Checkout: "/checkout",
   Product: {
     Details: "/product/[id]",
   },
