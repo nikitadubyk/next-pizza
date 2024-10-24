@@ -1,24 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Ingredient, ProductItem } from "@prisma/client";
 
-import { cn, calcTotalPizzaPrice, getAvailablePizzaSizes } from "@/shared/lib";
+import { usePizzaOptions } from "@/shared/hooks";
+import { cn, getPizzaDetails } from "@/shared/lib";
+import { PizzaSize, PizzaType, pizzaTypes } from "@/shared/constants";
 import {
   Title,
   PizzaImage,
   GroupVariants,
   IngredientItem,
 } from "@/shared/components/shared";
-import {
-  PizzaSize,
-  PizzaType,
-  pizzaTypes,
-  mapPizzaType,
-} from "@/shared/constants";
 
 import { Button } from "../ui";
-import { useSet } from "react-use";
 
 interface ChoosePizzaFormProps {
   name: string;
@@ -30,9 +24,6 @@ interface ChoosePizzaFormProps {
   onSubmit: (itemId: number, ingredients: number[]) => void;
 }
 
-const lowerTitle = (name: string) =>
-  name[0].toLowerCase() + name.slice(1).toLowerCase();
-
 export const ChoosePizzaForm = ({
   name,
   items,
@@ -41,34 +32,23 @@ export const ChoosePizzaForm = ({
   className,
   ingredients,
 }: ChoosePizzaFormProps) => {
-  const [type, setType] = useState<PizzaType>(1);
-  const [size, setSize] = useState<PizzaSize>(20);
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(
-    new Set<number>([])
-  );
+  const {
+    type,
+    size,
+    setSize,
+    setType,
+    addIngredient,
+    availablePizzaSizes,
+    selectedIngredients,
+  } = usePizzaOptions(items);
 
-  const totalPrice = calcTotalPizzaPrice({
+  const { totalPrice, textDetails } = getPizzaDetails({
     size,
     type,
     items,
     ingredients,
     selectedIngredients,
   });
-
-  const textDetails = `${size} см, ${lowerTitle(mapPizzaType[type])} тесто`;
-
-  const availablePizzaSizes = getAvailablePizzaSizes({ type, items });
-
-  useEffect(() => {
-    const isAvailableSize = availablePizzaSizes?.find(
-      (item) => +item.value === size && !item.disabled
-    );
-    const availableSize = availablePizzaSizes?.find((value) => !value.disabled);
-
-    if (!isAvailableSize && availableSize) {
-      setSize(Number(availableSize.value) as PizzaSize);
-    }
-  }, [type]);
 
   const onClickAdd = () => {
     onSubmit(1, Array.from(selectedIngredients));

@@ -27,6 +27,10 @@ interface ReturnProps extends Filters {
   setPrices: (name: keyof PriceRange, value: number) => void;
 }
 
+/**
+ * Custom hook to manage and update pizza filter options from URL search parameters.
+ * @returns {ReturnProps} - The current filter states and functions to update them.
+ */
 export const useFilters = (): ReturnProps => {
   const searchParams = useSearchParams() as unknown as Map<
     keyof QueryFilters,

@@ -10,6 +10,10 @@ interface ReturnProps {
   ingredients: Ingredient[];
 }
 
+/**
+ * Custom hook that fetches and filters a list of ingredients.
+ * @returns {ReturnProps} An object containing loading state and the list of ingredients.
+ */
 export const useFilterIngredients = (): ReturnProps => {
   const [isLoading, setIsLoading] = useState(true);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
