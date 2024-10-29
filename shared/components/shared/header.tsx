@@ -9,7 +9,6 @@ import { Button } from "../ui";
 import { SearchInput } from "./search";
 import { Container } from "./container";
 import { CartButton } from "./cart-button";
-import { CartDrawer } from "./cart-drawer";
 
 interface HeaderProps {
   className?: string;
@@ -41,9 +40,7 @@ export const Header = ({ className }: HeaderProps) => {
             Войти
           </Button>
 
-          <CartDrawer>
-            <CartButton price={150} />
-          </CartDrawer>
+          <CartButton />
         </div>
       </Container>
     </header>

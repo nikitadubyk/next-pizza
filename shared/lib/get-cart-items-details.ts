@@ -1,11 +1,11 @@
-import { Ingredient } from "@prisma/client";
+import { mapPizzaType, PizzaSize, PizzaType } from "../constants/pizza";
 
-import { mapPizzaType, PizzaSize, PizzaType } from "./../constants/pizza";
+import { CartStateItem } from "./get-cart-details";
 
 interface GetCartItemsDetails {
   pizzaSize: PizzaSize;
   pizzaType: PizzaType;
-  ingredients: Ingredient[];
+  ingredients: CartStateItem["ingredients"];
 }
 
 export const getCartItemsDetails = ({

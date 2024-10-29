@@ -1,4 +1,5 @@
 export enum ApiRoutes {
+  Cart = "/cart",
   Product = "/products/[id]",
   Categories = "/categories",
   Ingredients = "/ingredients",
