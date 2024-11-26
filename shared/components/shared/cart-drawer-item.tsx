@@ -6,12 +6,14 @@ import { PizzaSize, PizzaType } from "@/shared/constants";
 
 import { CountButton } from "./count-button";
 import * as CartItem from "./cart-item-details";
+import { OperationType } from "@/types";
 
 interface CartDrawerItemProps extends CartItem.CartItemProps {
   id: number;
   type?: PizzaType;
   className?: string;
   pizzaSize?: PizzaSize;
+  onClickCountButton?: (type: OperationType) => void;
 }
 
 export const CartDrawerItem = ({
@@ -24,6 +26,7 @@ export const CartDrawerItem = ({
   quantity,
   pizzaSize,
   className,
+  onClickCountButton,
 }: CartDrawerItemProps) => {
   return (
     <div className={cn("flex bg-white p-5 gap-6", className)}>
@@ -40,7 +43,7 @@ export const CartDrawerItem = ({
         <hr className="my-3" />
 
         <div className="flex items-center justify-between">
-          <CountButton value={quantity} />
+          <CountButton value={quantity} onClick={onClickCountButton} />
 
           <div className="flex items-center gap-3">
             <CartItem.Price value={price} />

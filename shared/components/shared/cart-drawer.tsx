@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, PropsWithChildren, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useState, useEffect, PropsWithChildren } from "react";
 
 import { OperationType } from "@/types";
 import { Routes } from "@/shared/services";
@@ -26,23 +26,28 @@ import { CartDrawerItem } from "./cart-drawer-item";
 
 export const CartDrawer = ({ children }: PropsWithChildren) => {
   const [redirecting, setRedirecting] = useState(false);
-  const [totalAmount, fetchCartItems, items] = useCartStore((state) => [
-    state.totalAmount,
-    state.fetchCartItems,
-    state.items,
-  ]);
+  const [totalAmount, fetchCartItems, updateItemQuantity, items] = useCartStore(
+    (state) => [
+      state.totalAmount,
+      state.fetchCartItems,
+      state.updateItemQuantity,
+      state.items,
+    ]
+  );
 
   useEffect(() => {
     fetchCartItems();
   }, []);
 
-  const onClickCountButton = (
+  const onClickCountButton = async (
     id: number,
     quantity: number,
     type: OperationType
   ) => {
     const newQuantity =
       type === OperationType.Plus ? quantity + 1 : quantity - 1;
+
+    await updateItemQuantity(id, newQuantity);
   };
 
   return (
@@ -95,6 +100,9 @@ export const CartDrawer = ({ children }: PropsWithChildren) => {
                       imageUrl={item.imageUrl}
                       disabled={item.disabled}
                       quantity={item.quantity}
+                      onClickCountButton={(type) =>
+                        onClickCountButton(item.id, item.quantity, type)
+                      }
                       details={getCartItemsDetails({
                         ingredients: item.ingredients,
                         pizzaSize: item.pizzaSize as PizzaSize,
