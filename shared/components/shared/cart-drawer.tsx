@@ -26,14 +26,19 @@ import { CartDrawerItem } from "./cart-drawer-item";
 
 export const CartDrawer = ({ children }: PropsWithChildren) => {
   const [redirecting, setRedirecting] = useState(false);
-  const [totalAmount, fetchCartItems, updateItemQuantity, items] = useCartStore(
-    (state) => [
-      state.totalAmount,
-      state.fetchCartItems,
-      state.updateItemQuantity,
-      state.items,
-    ]
-  );
+  const [
+    items,
+    totalAmount,
+    fetchCartItems,
+    removeCartItem,
+    updateItemQuantity,
+  ] = useCartStore((state) => [
+    state.items,
+    state.totalAmount,
+    state.fetchCartItems,
+    state.removeCartItem,
+    state.updateItemQuantity,
+  ]);
 
   useEffect(() => {
     fetchCartItems();
@@ -100,6 +105,7 @@ export const CartDrawer = ({ children }: PropsWithChildren) => {
                       imageUrl={item.imageUrl}
                       disabled={item.disabled}
                       quantity={item.quantity}
+                      onRemove={() => removeCartItem(item.id)}
                       onClickCountButton={(type) =>
                         onClickCountButton(item.id, item.quantity, type)
                       }

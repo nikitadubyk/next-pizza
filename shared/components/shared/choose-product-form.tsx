@@ -11,12 +11,14 @@ interface ChooseProductFormProps {
   loading?: boolean;
   className?: string;
   items: ProductItem[];
-  onSubmit: (itemId: number, ingredients: number[]) => void;
+  onSubmit: () => void;
 }
 
 export const ChooseProductForm = ({
   name,
+  loading,
   imageUrl,
+  onSubmit,
   className,
 }: ChooseProductFormProps) => {
   return (
@@ -39,7 +41,11 @@ export const ChooseProductForm = ({
           animi voluptate.
         </p>
 
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
+        <Button
+          loading={loading}
+          onClick={() => onSubmit?.()}
+          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+        >
           Добавить в корзину за {350} ₽
         </Button>
       </div>

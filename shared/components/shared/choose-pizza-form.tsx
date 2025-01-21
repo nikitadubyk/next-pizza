@@ -38,6 +38,7 @@ export const ChoosePizzaForm = ({
     setSize,
     setType,
     addIngredient,
+    currentItemId,
     availablePizzaSizes,
     selectedIngredients,
   } = usePizzaOptions(items);
@@ -51,7 +52,9 @@ export const ChoosePizzaForm = ({
   });
 
   const onClickAdd = () => {
-    onSubmit(1, Array.from(selectedIngredients));
+    if (currentItemId) {
+      onSubmit(currentItemId, Array.from(selectedIngredients));
+    }
   };
 
   return (

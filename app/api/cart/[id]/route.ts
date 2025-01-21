@@ -49,3 +49,47 @@ export async function PATCH(
     );
   }
 }
+
+/**
+ * Handles the DELETE request to remove a cart item.
+ *
+ * @param {NextRequest} req - The request object containing the HTTP request details.
+ * @param {{ params: { id: string } }} params - The parameters from the request, including the cart item ID.
+ * @returns {Promise<NextResponse>} The response object containing the updated cart or an error message.
+ */
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+): Promise<NextResponse> {
+  try {
+    const token = req.cookies.get("cartToken")?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Токен не удалось найти" });
+    }
+
+    const cartItem = await prisma.cartItem.findFirst({
+      where: {
+        id: Number(params.id),
+      },
+    });
+
+    if (!cartItem) {
+      return NextResponse.json({ error: "Не удалось найти товар из корзины" });
+    }
+
+    await prisma.cartItem.delete({
+      where: { id: Number(params.id) },
+    });
+
+    const updatedUserCart = await updateCartTotalAmount(token);
+
+    return NextResponse.json(updatedUserCart);
+  } catch (error) {
+    console.log("[CART_DELETE] Server error", error);
+    return NextResponse.json(
+      { message: "Не удалось удалить корзину" },
+      { status: 500 }
+    );
+  }
+}

@@ -13,6 +13,7 @@ interface CartDrawerItemProps extends CartItem.CartItemProps {
   type?: PizzaType;
   className?: string;
   pizzaSize?: PizzaSize;
+  onRemove?: () => void;
   onClickCountButton?: (type: OperationType) => void;
 }
 
@@ -24,36 +25,36 @@ export const CartDrawerItem = ({
   details,
   imageUrl,
   quantity,
+  onRemove,
   pizzaSize,
   className,
   onClickCountButton,
-}: CartDrawerItemProps) => {
-  return (
-    <div className={cn("flex bg-white p-5 gap-6", className)}>
-      <CartItem.Image src={imageUrl} />
+}: CartDrawerItemProps) => (
+  <div className={cn("flex bg-white p-5 gap-6", className)}>
+    <CartItem.Image src={imageUrl} />
 
-      <div className="flex-1">
-        <CartItem.Info
-          name={name}
-          type={type}
-          details={details}
-          pizzaSize={pizzaSize}
-        />
+    <div className="flex-1">
+      <CartItem.Info
+        name={name}
+        type={type}
+        details={details}
+        pizzaSize={pizzaSize}
+      />
 
-        <hr className="my-3" />
+      <hr className="my-3" />
 
-        <div className="flex items-center justify-between">
-          <CountButton value={quantity} onClick={onClickCountButton} />
+      <div className="flex items-center justify-between">
+        <CountButton value={quantity} onClick={onClickCountButton} />
 
-          <div className="flex items-center gap-3">
-            <CartItem.Price value={price} />
-            <Trash2Icon
-              className="text-gray-400 cursor-pointer hover:text-gray-600"
-              size={16}
-            />
-          </div>
+        <div className="flex items-center gap-3">
+          <CartItem.Price value={price} />
+          <Trash2Icon
+            size={16}
+            onClick={onRemove}
+            className="text-gray-400 cursor-pointer hover:text-gray-600"
+          />
         </div>
       </div>
     </div>
-  );
-};
+  </div>
+);

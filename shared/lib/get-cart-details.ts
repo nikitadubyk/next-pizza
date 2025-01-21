@@ -19,6 +19,12 @@ interface ReturnProps {
   items: CartStateItem[];
 }
 
+/**
+ * Extracts detailed information from the cart data and formats it for display.
+ *
+ * @param {CartDTO} data - The cart data transfer object containing items and total amount.
+ * @returns {ReturnProps} An object containing formatted cart items and total amount.
+ */
 export const getCartDetails = (data: CartDTO): ReturnProps => {
   const items = data.items.map((item) => ({
     id: item.id,

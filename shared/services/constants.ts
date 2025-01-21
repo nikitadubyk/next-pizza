@@ -4,6 +4,7 @@ export enum ApiRoutes {
   Categories = "/categories",
   Ingredients = "/ingredients",
   UpdateCartItem = "/cart/[id]",
+  DeleteCartItem = "/cart/[id]",
   ProductsSearch = "/products/search",
 }
 

@@ -1,4 +1,4 @@
-import { CartDTO } from "@/types";
+import { CartDTO, CreateCartItemValues } from "@/types";
 
 import { ApiRoutes } from "./constants";
 import { axiosInstance } from "./instance";
@@ -30,5 +30,31 @@ export const updateItemQuantity = async (
     ApiRoutes.UpdateCartItem.replace("[id]", String(itemId)),
     { quantity }
   );
+  return response.data;
+};
+
+/**
+ * Removes an item from the cart by its ID.
+ *
+ * @param {number} id - The ID of the cart item to be removed.
+ * @returns {Promise<CartDTO>} The updated cart data transfer object after removal.
+ */
+export const removeCartItem = async (id: number): Promise<CartDTO> => {
+  const response = await axiosInstance.delete<CartDTO>(
+    ApiRoutes.DeleteCartItem.replace("[id]", String(id))
+  );
+  return response.data;
+};
+
+/**
+ * Add item to cart.
+ *
+ * @param {CreateCartItemValues} values - The values for create new item in cart.
+ * @returns {Promise<CartDTO>} The updated cart data transfer object after removal.
+ */
+export const addCartItem = async (
+  values: CreateCartItemValues
+): Promise<CartDTO> => {
+  const response = await axiosInstance.post<CartDTO>(ApiRoutes.Cart, values);
   return response.data;
 };
