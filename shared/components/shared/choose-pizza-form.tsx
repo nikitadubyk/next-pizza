@@ -27,6 +27,7 @@ interface ChoosePizzaFormProps {
 export const ChoosePizzaForm = ({
   name,
   items,
+  loading,
   imageUrl,
   onSubmit,
   className,
@@ -99,6 +100,7 @@ export const ChoosePizzaForm = ({
         </div>
 
         <Button
+          loading={loading}
           onClick={onClickAdd}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
         >

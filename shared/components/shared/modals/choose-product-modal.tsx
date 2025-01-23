@@ -1,5 +1,6 @@
 "use client";
 
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 import { cn } from "@/shared/lib";
@@ -37,7 +38,12 @@ export const ChooseProductModal = ({
         ingredients,
         productItemId: itemId,
       });
+
+      toast.success(`${product.name} успешно добавлен в корзину`);
+
+      router.back();
     } catch (err) {
+      toast.success(`Не удалось добавить продукт в корзину`);
       console.error(err);
     }
   };
