@@ -4,30 +4,20 @@ import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useIntersection } from "react-use";
 
-import { cn, generatePath } from "@/shared/lib";
 import { Routes } from "@/shared/services";
+import { ProductWithRelations } from "@/types";
+import { cn, generatePath } from "@/shared/lib";
+import { useCategoriesStore } from "@/shared/store";
 
 import { Title } from "./title";
 import { ProductCard } from "./product-card";
-import { useCategoriesStore } from "@/shared/store";
-
-interface ProductItem {
-  price: number;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  imageUrl: string;
-  items: ProductItem[];
-}
 
 interface ProductsGroupListProps {
   title: string;
-  items: Product[];
   className?: string;
   categoryId: number;
   listClassName?: string;
+  items: ProductWithRelations[];
 }
 
 export const ProductsGroupList = ({
@@ -64,6 +54,7 @@ export const ProductsGroupList = ({
             name={product.name}
             imageUrl={product.imageUrl}
             price={product.items[0].price}
+            ingredients={product.ingredients}
             onClick={() =>
               route.push(
                 generatePath(Routes.Product.Details, { id: product.id })

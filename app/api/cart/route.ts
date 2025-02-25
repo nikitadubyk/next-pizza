@@ -70,18 +70,18 @@ export async function POST(req: NextRequest) {
       where: {
         cartId: userCart.id,
         productItemId: data.productItemId,
-        ingredients: {
-          every: {
-            id: { in: data.ingredients },
-          },
-        },
+        ingredients: { every: { id: { in: data.ingredients } } },
       },
     });
 
     if (findCartItem) {
       await prisma.cartItem.update({
-        where: { id: findCartItem.id },
-        data: { quantity: findCartItem.quantity + 1 },
+        where: {
+          id: findCartItem.id,
+        },
+        data: {
+          quantity: findCartItem.quantity + 1,
+        },
       });
     } else {
       await prisma.cartItem.create({
@@ -89,18 +89,16 @@ export async function POST(req: NextRequest) {
           quantity: 1,
           cartId: userCart.id,
           productItemId: data.productItemId,
-          ingredients: {
-            connect: data.ingredients?.map((id: number) => ({ id })),
-          },
+          ingredients: { connect: data.ingredients?.map((id) => ({ id })) },
         },
       });
     }
 
     const updatedUserCart = await updateCartTotalAmount(token);
 
-    const response = NextResponse.json(updatedUserCart);
-    response.cookies.set("cartToken", token);
-    return response;
+    const resp = NextResponse.json(updatedUserCart);
+    resp.cookies.set("cartToken", token);
+    return resp;
   } catch (error) {
     console.log("[CART_POST] Server error", error);
     return NextResponse.json(

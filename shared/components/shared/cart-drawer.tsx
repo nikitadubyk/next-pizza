@@ -61,11 +61,14 @@ export const CartDrawer = ({ children }: PropsWithChildren) => {
 
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <div className={cn("flex flex-col h-full")}>
-          <SheetHeader>
-            <SheetTitle>
-              В корзине <span className="font-bold">{items.length} товара</span>
-            </SheetTitle>
-          </SheetHeader>
+          {totalAmount > 0 && (
+            <SheetHeader>
+              <SheetTitle>
+                В корзине{" "}
+                <span className="font-bold">{items.length} товара</span>
+              </SheetTitle>
+            </SheetHeader>
+          )}
 
           {!totalAmount && (
             <div className="flex flex-col h-full items-center justify-center w-72 mx-auto">

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Plus } from "lucide-react";
 
 import { cn } from "@/shared/lib";
+import { Ingredient } from "@prisma/client";
 
 import { Button } from "../ui";
 
@@ -15,6 +16,7 @@ interface ProductCardProps {
   imageUrl: string;
   className?: string;
   onClick?: () => void;
+  ingredients: Ingredient[];
 }
 
 export const ProductCard = ({
@@ -24,6 +26,7 @@ export const ProductCard = ({
   onClick,
   imageUrl,
   className,
+  ingredients,
 }: ProductCardProps) => (
   <div onClick={onClick} className={cn(className)}>
     <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
@@ -31,8 +34,7 @@ export const ProductCard = ({
     </div>
     <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
     <p className="text-sm text-gray-400">
-      Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, соус
-      альфредо, чеснок
+      {ingredients.map((ingredient) => ingredient.name).join(", ")}
     </p>
 
     <div className="flex justify-between items-center mt-4">

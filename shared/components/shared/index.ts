@@ -11,6 +11,7 @@ export { CartDrawer } from "./cart-drawer";
 export { PizzaImage } from "./pizza-image";
 export { CountButton } from "./count-button";
 export { ProductCard } from "./product-card";
+export { ProductForm } from "./product-form";
 export { GroupVariants } from "./group-variants";
 export { FilterCheckbox } from "./filter-checkbox";
 export { IngredientItem } from "./ingredient-item";
