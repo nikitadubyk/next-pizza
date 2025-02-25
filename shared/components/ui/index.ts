@@ -7,6 +7,7 @@ export { Select } from "./select";
 export { Slider } from "./slider";
 export { Popover } from "./popover";
 export { Checkbox } from "./checkbox";
+export { Textarea } from "./textarea";
 export { Skeleton } from "./skeleton";
 export { RangeSlider } from "./range-slider";
 export { RadioGroup, RadioGroupItem } from "./radio-group";

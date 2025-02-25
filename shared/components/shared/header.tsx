@@ -12,12 +12,18 @@ import { Container } from "./container";
 import { CartButton } from "./cart-button";
 
 interface HeaderProps {
+  hasCart?: boolean;
   className?: string;
+  hasSearch?: boolean;
 }
 
-export const Header = ({ className }: HeaderProps) => {
+export const Header = ({
+  className,
+  hasCart = true,
+  hasSearch = true,
+}: HeaderProps) => {
   return (
-    <header className={cn("border border-b", className)}>
+    <header className={cn("border-b", className)}>
       <Container className="flex items-center justify-between py-8">
         <Link href={Routes.Home}>
           <div className="flex items-center gap-4">
@@ -31,9 +37,11 @@ export const Header = ({ className }: HeaderProps) => {
           </div>
         </Link>
 
-        <div className="mx-10 flex-1">
-          <SearchInput />
-        </div>
+        {hasSearch && (
+          <div className="mx-10 flex-1">
+            <SearchInput />
+          </div>
+        )}
 
         <div className="flex items-center gap-3">
           <Button variant="outline" className="flex items-center gap-3">
@@ -41,7 +49,7 @@ export const Header = ({ className }: HeaderProps) => {
             Войти
           </Button>
 
-          <CartButton />
+          {hasCart && <CartButton />}
         </div>
       </Container>
     </header>
