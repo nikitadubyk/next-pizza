@@ -2,11 +2,15 @@
 
 import { useForm, FormProvider } from "react-hook-form";
 
+import { OperationType } from "@/types";
+import { useCart } from "@/shared/hooks";
 import {
   Title,
   Container,
+  CheckoutCart,
+  CheckoutSidebar,
+  CheckoutAddressForm,
   CheckoutPersonalForm,
-  WhiteBlock,
 } from "@/shared/components/shared";
 
 const defaultValues = {
@@ -17,9 +21,22 @@ const defaultValues = {
 };
 
 export default function CheckoutPage() {
+  const { totalAmount, updateItemQuantity, items, removeCartItem, loading } =
+    useCart();
+
   const form = useForm({
     defaultValues,
   });
+
+  const onClickCountButton = (
+    id: number,
+    quantity: number,
+    type: OperationType
+  ) => {
+    const newQuantity =
+      type === OperationType.Plus ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
 
   return (
     <Container className="mt-10">
@@ -31,12 +48,20 @@ export default function CheckoutPage() {
       <FormProvider {...form}>
         <div className="flex gap-10">
           <div className="flex flex-col gap-10 flex-1 mb-20">
-            <WhiteBlock title="1. Корзина">контент</WhiteBlock>
+            <CheckoutCart
+              items={items}
+              loading={loading}
+              removeCartItem={removeCartItem}
+              onClickCountButton={onClickCountButton}
+            />
+
             <CheckoutPersonalForm />
+
+            <CheckoutAddressForm />
           </div>
 
           <div className="w-[450px]">
-            <WhiteBlock title="3. Способ оплаты">контент</WhiteBlock>
+            <CheckoutSidebar loading={loading} totalAmount={totalAmount} />
           </div>
         </div>
       </FormProvider>

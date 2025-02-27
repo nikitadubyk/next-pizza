@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState, PropsWithChildren } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState, useEffect, PropsWithChildren } from "react";
 
 import { OperationType } from "@/types";
+import { useCart } from "@/shared/hooks";
 import { Routes } from "@/shared/services";
-import { useCartStore } from "@/shared/store";
 import { cn, getCartItemsDetails } from "@/shared/lib";
 import { PizzaSize, PizzaType } from "@/shared/constants";
 import {
@@ -26,23 +26,7 @@ import { CartDrawerItem } from "./cart-drawer-item";
 
 export const CartDrawer = ({ children }: PropsWithChildren) => {
   const [redirecting, setRedirecting] = useState(false);
-  const [
-    items,
-    totalAmount,
-    fetchCartItems,
-    removeCartItem,
-    updateItemQuantity,
-  ] = useCartStore((state) => [
-    state.items,
-    state.totalAmount,
-    state.fetchCartItems,
-    state.removeCartItem,
-    state.updateItemQuantity,
-  ]);
-
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
+  const { items, totalAmount, removeCartItem, updateItemQuantity } = useCart();
 
   const onClickCountButton = async (
     id: number,
